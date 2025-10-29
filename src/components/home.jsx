@@ -28,7 +28,8 @@ function Home() {
         </section>
         <section className='container background-submit'>
             <h1 className='text-center'>Make Your Own Here!</h1>
-            <p>Description leading to a form to fill out either on another page or as a pop up</p>
+            <p className='text-center'>Here you can submit your own ideas! Just click the button below and the form should pop up, fill it out then BAM! Your idea will be added and in the pool for selection if people turn on custom ideas!</p>
+            <button className='btn btn-success mx-auto d-grid'>Click Here To Add Custom Ideas!</button>
         </section>
         </>
     )
