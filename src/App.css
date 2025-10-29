@@ -20,6 +20,12 @@
 
 .background-title {
   background-image: linear-gradient(red);
-  min-width: 100vw;
-  min-height: 16vw;
+  min-width: 100%;
+  min-height: 110px;
+}
+
+.background-description {
+  padding: 10px;
+  background-image: linear-gradient(grey);
+  min-width: 100%;
 }
