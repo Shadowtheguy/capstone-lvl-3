@@ -3,7 +3,7 @@ import { useState } from 'react'
 function Home() {
     return (
         <>
-        <section>
+        <section className='container background-title'>
             <h1 className='pokefont-title text-center'>PokeMix!</h1>
         </section>
         <section>

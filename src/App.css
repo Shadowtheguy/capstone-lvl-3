@@ -15,7 +15,11 @@
 .pokefont-title {
   font-family: 'Pokemon Solid', sans-serif;
   font-size: 70px;
-  margin: 10px;
-  margin-bottom: 50px;
   color: yellow;
+}
+
+.background-title {
+  background-image: linear-gradient(red);
+  min-width: 100vw;
+  min-height: 16vw;
 }
