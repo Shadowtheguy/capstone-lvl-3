@@ -1,23 +1,49 @@
+/* Added the Pokemon Fonts */
 @font-face {
   font-family: "Pokemon Hollow";
-  src: local("Pokemon Hollow"), url("./fonts/Pokemon\ Hollow.ttf") format('truetype');
+  src: local("Pokemon Hollow"),
+    url("./fonts/Pokemon\ Hollow.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Pokemon Solid";
-  src: local("Pokemon Solid"), url("./fonts/Pokemon\ Solid.ttf") format('truetype');
+  src: local("Pokemon Solid"),
+    url("./fonts/Pokemon\ Solid.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
-.pokefont-title {
-  font-family: 'Pokemon Solid', sans-serif;
-  font-size: 70px;
-  color: yellow;
+@font-face {
+  font-family: "Josh";
+  src: local("Josh"), url("./fonts/Jost-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
+@font-face {
+  font-family: "Josh Italic";
+  src: local("Josh Italic"), url("./fonts/Jost-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Imported the Fonts for Use */
+.pokefont-title {
+  font-family: "Pokemon Solid", sans-serif;
+  font-size: 70px;
+  color: yellow;
+  text-shadow: -2px -2px 0 black, 2px -2px 0 black, -2px 2px 0 black,
+    2px 2px 0 black;
+}
+
+.pokefont-mixes {
+  font-family: "Pokemon Solid", sans-serif;
+  color: rgb(133, 0, 0);
+}
+
+/* Background Making */
 .background-title {
   background-image: linear-gradient(red);
   min-width: 100%;
@@ -28,4 +54,20 @@
   padding: 10px;
   background-image: linear-gradient(grey);
   min-width: 100%;
+  font-family: "Josh Italic", sans-serif;
+}
+
+.background-mixes {
+  background-image: linear-gradient(yellow);
+  min-width: 100%;
+  padding: 10px;
+}
+
+.background-submit {
+  background-image: linear-gradient(purple);
+  min-width: 100%;
+  min-height: 100vh;
+  color: white;
+  padding-top: 10px;
+  font-family: "Josh", sans-serif;
 }
