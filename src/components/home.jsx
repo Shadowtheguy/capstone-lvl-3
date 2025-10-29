@@ -4,7 +4,7 @@ function Home() {
     return (
         <>
         <section>
-            <h1>PokeMix!</h1>
+            <h1 className='pokefont-title text-center'>PokeMix!</h1>
         </section>
         <section>
             <h2>Welcome to the website</h2>
