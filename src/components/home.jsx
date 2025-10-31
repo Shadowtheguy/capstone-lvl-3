@@ -23,7 +23,10 @@ function Home() {
       </section>
       {/* Website Function */}
       <section className="container background-mixes">
-        <p className="text-center pokemix-options">The first mix is for you! Just put in the options that you want, or randomize it! Meanwhile, the second pokemix is random every click! Can you beat my random creations?
+        <p className="text-center pokemix-options">
+          The first mix is for you! Just put in the options that you want, or
+          randomize it! Meanwhile, the second pokemix is random every click! Can
+          you beat my random creations?
         </p>
         <div className="row">
           <div className="col-5">
@@ -64,9 +67,55 @@ function Home() {
                     Go
                   </button>
                 </div>
-                <p>placeholder</p>
+                {/* Actual Stat Container */}
+                <div className="stat-container">
+                  {/* HP */}
+                  <div>
+                    <p className="hp-tag">HP</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-HP1"></div>
+                    </div>
+                  </div>
+                  {/* Physical Attack */}
+                  <div>
+                    <p className="atk-tag">ATK</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-PAtk1"></div>
+                    </div>
+                  </div>
+                  {/* Physical Defense */}
+                  <div>
+                    <p className="def-tag">DEF</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-PDef1"></div>
+                    </div>
+                  </div>
+                  {/* Special Attack */}
+                  <div>
+                    <p className="satk-tag">SATK</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-SAtk1"></div>
+                    </div>
+                  </div>
+                  {/* Special Defense */}
+                  <div>
+                    <p className="sdef-tag">SDEF</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-SDef1"></div>
+                    </div>
+                  </div>
+                  {/* Speed */}
+                  <div>
+                    <p className="speed-tag">SPE</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-Speed1"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button className="btn btn-primary m-1 bottom-button">Randomize it!</button>
+              <button className="btn btn-primary m-1 bottom-button">
+                Randomize it!
+              </button>
             </div>
           </div>
           {/* VS */}
@@ -85,15 +134,63 @@ function Home() {
               </div>
               {/* Pokemix 2 Ability */}
               <div>
-                <h5 className="pokemix-options">Ability:</h5>
+                <h5 className="pokemix-options adjust-pokemix-2">Ability:</h5>
                 <p className="pokemix-options">placeholder</p>
               </div>
               {/* Pokemix 2 Stats */}
               <div>
-                <h5 className="pokemix-options">Stats:</h5>
-                <p>placeholder</p>
+                <div className="adjust-pokemix-2">
+                  <h5 className="pokemix-options">Stats:</h5>
+                </div>
+                {/* Actual Stat Container */}
+                <div className="stat-container">
+                  {/* HP */}
+                  <div>
+                    <p className="hp-tag">HP</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-HP1"></div>
+                    </div>
+                  </div>
+                  {/* Physical Attack */}
+                  <div>
+                    <p className="atk-tag">ATK</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-PAtk1"></div>
+                    </div>
+                  </div>
+                  {/* Physical Defense */}
+                  <div>
+                    <p className="def-tag">DEF</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-PDef1"></div>
+                    </div>
+                  </div>
+                  {/* Special Attack */}
+                  <div>
+                    <p className="satk-tag">SATK</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-SAtk1"></div>
+                    </div>
+                  </div>
+                  {/* Special Defense */}
+                  <div>
+                    <p className="sdef-tag">SDEF</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-SDef1"></div>
+                    </div>
+                  </div>
+                  {/* Speed */}
+                  <div>
+                    <p className="speed-tag">SPE</p>
+                    <div className="stat-bar1">
+                      <div className="stat-fill-Speed1"></div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <button className="btn btn-dark m-1 bottom-button">New Opponent!</button>
+              <button className="btn btn-dark m-1 bottom-button">
+                New Opponent!
+              </button>
             </div>
           </div>
         </div>
