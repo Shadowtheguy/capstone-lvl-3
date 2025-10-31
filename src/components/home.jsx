@@ -1,6 +1,36 @@
 import { useState } from "react";
+import PokeAPI from "./pokeAPI";
 
 function Home() {
+    //* Setting Variables
+    // Typings
+    const [firstType1, setFirstType1] = useState(null)
+    const [secondType1, setSecondType1] = useState(null)
+
+    const [firstType2, setFirstType2] = useState(null)
+    const [secondType2, setSecondType2] = useState(null)
+
+    //Abilities
+    const [ability1, setAbility1] = useState(null)
+    const [ability2, setAbility2] = useState(null)
+
+    //Stats
+    //! Highest Base Stat is HP at 255
+    const [HP1, setHP1] = useState(0)
+    const [ATK1, setATK1] = useState(0)
+    const [DEF1, setDEF1] = useState(0)
+    const [SATK1, setSATK1] = useState(0)
+    const [SDEF1, setSDEF1] = useState(0)
+    const [SPE1, setSPE1] = useState(0)
+
+    const [HP2, setHP2] = useState(0)
+    const [ATK2, setATK2] = useState(0)
+    const [DEF2, setDEF2] = useState(0)
+    const [SATK2, setSATK2] = useState(0)
+    const [SDEF2, setSDEF2] = useState(0)
+    const [SPE2, setSPE2] = useState(0)
+
+    //* Actual HTML
   return (
     <>
       {/* Website Title */}
