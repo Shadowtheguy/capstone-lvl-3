@@ -1,36 +1,242 @@
-import { useState } from "react";
-import PokeAPI from "./pokeAPI";
+// need this later https://pokeapi.co/api/v2/ability?offest=367&limit=367
+
+import { useState, useRef } from "react";
+
+//* Functions
+function randomNumber(a, b) {
+  return Math.floor(Math.random() * (b - a) + a);
+}
 
 function Home() {
-    //* Setting Variables
-    // Typings
-    const [firstType1, setFirstType1] = useState(null)
-    const [secondType1, setSecondType1] = useState(null)
+  //* Setting Variables
+  // HTML Inserts
+  const [userTypes, setUserTypes] = useState(
+    <>
+      <p className="col-4 types"></p>
+      <p className="col-4 types"></p>
+    </>
+  );
 
-    const [firstType2, setFirstType2] = useState(null)
-    const [secondType2, setSecondType2] = useState(null)
+  const [userAbility, setUserAbility] = useState(
+    <p className="pokemix-options">No ability selected yet, go crazy!</p>
+  );
 
-    //Abilities
-    const [ability1, setAbility1] = useState(null)
-    const [ability2, setAbility2] = useState(null)
+  // Lists
+  const typeList = [
+    "Normal",
+    "Grass",
+    "Fire",
+    "Water",
+    "Bug",
+    "Flying",
+    "Fighting",
+    "Psychic",
+    "Dark",
+    "Dragon",
+    "Steel",
+    "Rock",
+    "Ground",
+    "Fairy",
+    "Electric",
+    "Poison",
+    "Ghost",
+    "Ice",
+    "",
+  ];
 
-    //Stats
-    //! Highest Base Stat is HP at 255
-    const [HP1, setHP1] = useState(0)
-    const [ATK1, setATK1] = useState(0)
-    const [DEF1, setDEF1] = useState(0)
-    const [SATK1, setSATK1] = useState(0)
-    const [SDEF1, setSDEF1] = useState(0)
-    const [SPE1, setSPE1] = useState(0)
+  // Ability
+  const currentUserAbility = useRef("");
 
-    const [HP2, setHP2] = useState(0)
-    const [ATK2, setATK2] = useState(0)
-    const [DEF2, setDEF2] = useState(0)
-    const [SATK2, setSATK2] = useState(0)
-    const [SDEF2, setSDEF2] = useState(0)
-    const [SPE2, setSPE2] = useState(0)
+  // Stats
+  const currentUserStats = useRef("");
 
-    //* Actual HTML
+  //! Highest Base Stat is HP at 255
+  const [HP1, setHP1] = useState(0);
+  const [ATK1, setATK1] = useState(0);
+  const [DEF1, setDEF1] = useState(0);
+  const [SATK1, setSATK1] = useState(0);
+  const [SDEF1, setSDEF1] = useState(0);
+  const [SPE1, setSPE1] = useState(0);
+
+  const [HP2, setHP2] = useState(0);
+  const [ATK2, setATK2] = useState(0);
+  const [DEF2, setDEF2] = useState(0);
+  const [SATK2, setSATK2] = useState(0);
+  const [SDEF2, setSDEF2] = useState(0);
+  const [SPE2, setSPE2] = useState(0);
+
+  //* Styles
+  // Styles for specific types
+  const typeStyleNormal = {
+    backgroundColor: "#A8A77A",
+    borderColor: "black",
+  };
+
+  const typeStyleGrass = {
+    backgroundColor: "#7AC74C",
+    borderColor: "black",
+  };
+
+  const typeStyleFire = {
+    backgroundColor: "#EE8130",
+    borderColor: "black",
+  };
+
+  const typeStyleWater = {
+    backgroundColor: "#6390F0",
+    borderColor: "black",
+  };
+
+  const typeStyleBug = {
+    backgroundColor: "#A6B91A",
+    borderColor: "black",
+  };
+
+  const typeStyleFlying = {
+    backgroundColor: "#A98FF3",
+    borderColor: "black",
+  };
+
+  const typeStyleFighting = {
+    backgroundColor: "#C22E28",
+    borderColor: "black",
+  };
+
+  const typeStylePsychic = {
+    backgroundColor: "#F95587",
+    borderColor: "black",
+  };
+
+  const typeStyleDark = {
+    backgroundColor: "#705746",
+    borderColor: "black",
+  };
+
+  const typeStyleDragon = {
+    backgroundColor: "#6F35FC",
+    borderColor: "black",
+  };
+
+  const typeStyleSteel = {
+    backgroundColor: "#B7B7CE",
+    borderColor: "black",
+  };
+
+  const typeStyleRock = {
+    backgroundColor: "#B6A136",
+    borderColor: "black",
+  };
+
+  const typeStyleGround = {
+    backgroundColor: "#E2BF65",
+    borderColor: "black",
+  };
+
+  const typeStyleFairy = {
+    backgroundColor: "#D685AD",
+    borderColor: "black",
+  };
+
+  const typeStyleElectric = {
+    backgroundColor: "#F7D02C",
+    borderColor: "black",
+  };
+
+  const typeStylePoison = {
+    backgroundColor: "#A33EA1",
+    borderColor: "black",
+  };
+
+  const typeStyleGhost = {
+    backgroundColor: "#735797",
+    borderColor: "black",
+  };
+
+  const typeStyleIce = {
+    backgroundColor: "#96D9D6",
+    borderColor: "black",
+  };
+
+  const typeStyleNone = {
+    backgroundColor: "white",
+    borderColor: "white",
+  };
+
+  // List to cycle through
+  const typeStyleList = [
+    typeStyleNormal,
+    typeStyleGrass,
+    typeStyleFire,
+    typeStyleWater,
+    typeStyleBug,
+    typeStyleFighting,
+    typeStyleFlying,
+    typeStylePsychic,
+    typeStyleDark,
+    typeStyleDragon,
+    typeStyleSteel,
+    typeStyleRock,
+    typeStyleGround,
+    typeStyleFairy,
+    typeStyleElectric,
+    typeStylePoison,
+    typeStyleGhost,
+    typeStyleIce,
+    typeStyleNone,
+  ];
+
+  //* Randomization
+  // Randomizing Types
+
+  function randomizeUserType(event) {
+    let randomType1 = randomNumber(0, 16);
+    let randomType2 = randomNumber(0, 17);
+
+    setUserTypes(
+      <>
+        <p className="col-4 types" style={typeStyleList[randomType1]}>
+          {typeList[randomType1]}
+        </p>
+        <p className="col-4 types" style={typeStyleList[randomType2]}>
+          {typeList[randomType2]}
+        </p>
+      </>
+    );
+  }
+
+  // All Together
+  function randomizeUserPokemon(event) {
+    randomizeUserType();
+  }
+
+  //* Fetching From API
+  // Ability
+  function fetchUserAbility(event) {
+    event.preventDefault();
+    const abilityInput = currentUserAbility.current.value;
+    const fetchAbility = abilityInput.toLowerCase().replace(" ", "-");
+
+    fetch("https://pokeapi.co/api/v2/ability/" + fetchAbility)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+
+    currentUserAbility.current.value = "";
+  }
+
+  // Stats
+  function fetchUserStats(event) {
+    event.preventDefault();
+    const statInput = currentUserStats.current.value;
+    const fetchStats = statInput.toLowerCase.replace(" ", "-");
+
+    fetch("https://pokeapi.co/api/v2/pokemon/" + fetchStats)
+      .then((response) => response.json())
+      .then((data) => console.log(data));
+
+    currentUserStats.current.value ="";
+  }
+
+  //* Actual HTML
   return (
     <>
       {/* Website Title */}
@@ -66,30 +272,33 @@ function Home() {
               {/* Pokemix 1 Type */}
               <div className="pokemix-options row">
                 <h5 className="pokemix-options col-3">Type:</h5>
-                <p className="col-4 types"></p>
-                <p className="col-4 types"></p>
+                {userTypes}
               </div>
               {/* Pokemix 1 Ability */}
               <div>
                 <div className="row pokemix-options">
                   <h5 className="pokemix-options col-4">Ability:</h5>
-                  <input className="col-4 smaller-input" />
+                  <input
+                    className="col-4 smaller-input"
+                    ref={currentUserAbility}
+                  />
                   <button
-                    type="submit"
+                    onClick={fetchUserAbility}
                     className="ability-button btn btn-danger col-2"
                   >
                     Go
                   </button>
                 </div>
-                <p className="pokemix-options">
-                  No ability selected yet, go crazy!
-                </p>
+                {userAbility}
               </div>
               {/* Pokemix 1 Stats */}
               <div>
                 <div className="row pokemix-options">
                   <h5 className="col-4 pokemix-options">Stats:</h5>
-                  <input className="col-4 smaller-input" />
+                  <input
+                    className="col-4 smaller-input"
+                    ref={currentUserStats}
+                  />
                   <button
                     type="submit"
                     className="ability-button btn btn-danger col-2"
@@ -143,7 +352,10 @@ function Home() {
                   </div>
                 </div>
               </div>
-              <button className="btn btn-primary m-1 bottom-button">
+              <button
+                className="btn btn-primary m-1 bottom-button"
+                onClick={randomizeUserPokemon}
+              >
                 Randomize it!
               </button>
             </div>
@@ -159,8 +371,8 @@ function Home() {
             <div className="pokemix-card card">
               <div className="pokemix-options row">
                 <h5 className="pokemix-options col-3">Type:</h5>
-                <p className="col-4 types"></p>
-                <p className="col-4 types"></p>
+                <p className="col-4 types" id="opponentType1"></p>
+                <p className="col-4 types" id="opponentType2"></p>
               </div>
               {/* Pokemix 2 Ability */}
               <div>
