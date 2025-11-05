@@ -19,14 +19,18 @@ function Home() {
   // HTML Inserts
   const [userTypes, setUserTypes] = useState(
     <>
-      <button className="col-4 types">Select</button>
-      <button className="col-4 types">Select</button>
+      <button onClick={nextFirstType} className="col-4 types">Select</button>
+      <button onClick={nextSecondType} className="col-4 types">Select</button>
     </>
   );
 
   const [userAbility, setUserAbility] = useState(
     "No ability selected yet, go crazy!"
   );
+
+  // Types
+  let userFirstType = 17;
+  let userSecondType = 18;
 
   // Lists
   const typeList = [
@@ -53,7 +57,6 @@ function Home() {
 
   // Ability
   const currentUserAbility = useRef("");
-  const [fetchedAbility, setFetchedAbility] = useState("");
 
   // Stats
   const currentUserStats = useRef("");
@@ -67,12 +70,12 @@ function Home() {
   const [userSPE, setUserSPE] = useState(0);
 
   // Color Selector for Stats
-  const [userHPColor, setUserHPColor] = useState("white")
-  const [userATKColor, setUserATKColor] = useState("white")
-  const [userDEFColor, setUserDEFColor] = useState("white")
-  const [userSPAColor, setUserSPAColor] = useState("white")
-  const [userSPDColor, setUserSPDColor] = useState("white")
-  const [userSPEColor, setUserSPEColor] = useState("white")
+  const [userHPColor, setUserHPColor] = useState("white");
+  const [userATKColor, setUserATKColor] = useState("white");
+  const [userDEFColor, setUserDEFColor] = useState("white");
+  const [userSPAColor, setUserSPAColor] = useState("white");
+  const [userSPDColor, setUserSPDColor] = useState("white");
+  const [userSPEColor, setUserSPEColor] = useState("white");
 
   //* Styles
   // Styles for specific types
@@ -206,75 +209,75 @@ function Home() {
   //! Bar colors only update after clicking the button again
   function statBarColoring() {
     if (userHP < 51) {
-      setUserHPColor("red")
+      setUserHPColor("red");
     } else if (userHP < 102) {
-      setUserHPColor("orange")
+      setUserHPColor("orange");
     } else if (userHP < 153) {
-      setUserHPColor("yellow")
+      setUserHPColor("yellow");
     } else if (userHP < 204) {
-      setUserHPColor("lime")
+      setUserHPColor("lime");
     } else {
-      setUserHPColor("cyan")
+      setUserHPColor("cyan");
     }
 
     if (userATK < 51) {
-      setUserATKColor("red")
+      setUserATKColor("red");
     } else if (userATK < 102) {
-      setUserATKColor("orange")
+      setUserATKColor("orange");
     } else if (userATK < 153) {
-      setUserATKColor("yellow")
+      setUserATKColor("yellow");
     } else if (userATK < 204) {
-      setUserATKColor("lime")
+      setUserATKColor("lime");
     } else {
-      setUserATKColor("cyan")
+      setUserATKColor("cyan");
     }
 
     if (userDEF < 51) {
-      setUserDEFColor("red")
+      setUserDEFColor("red");
     } else if (userDEF < 102) {
-      setUserDEFColor("orange")
+      setUserDEFColor("orange");
     } else if (userDEF < 153) {
-      setUserDEFColor("yellow")
+      setUserDEFColor("yellow");
     } else if (userDEF < 204) {
-      setUserDEFColor("lime")
+      setUserDEFColor("lime");
     } else {
-      setUserDEFColor("cyan")
+      setUserDEFColor("cyan");
     }
 
     if (userSPA < 51) {
-      setUserSPAColor("red")
+      setUserSPAColor("red");
     } else if (userSPA < 102) {
-      setUserSPAColor("orange")
+      setUserSPAColor("orange");
     } else if (userSPA < 153) {
-      setUserSPAColor("yellow")
+      setUserSPAColor("yellow");
     } else if (userSPA < 204) {
-      setUserSPAColor("lime")
+      setUserSPAColor("lime");
     } else {
-      setUserSPAColor("cyan")
+      setUserSPAColor("cyan");
     }
 
     if (userSPD < 51) {
-      setUserSPDColor("red")
+      setUserSPDColor("red");
     } else if (userSPD < 102) {
-      setUserSPDColor("orange")
+      setUserSPDColor("orange");
     } else if (userSPD < 153) {
-      setUserSPDColor("yellow")
+      setUserSPDColor("yellow");
     } else if (userSPD < 204) {
-      setUserSPDColor("lime")
+      setUserSPDColor("lime");
     } else {
-      setUserSPDColor("cyan")
+      setUserSPDColor("cyan");
     }
 
     if (userSPE < 51) {
-      setUserSPEColor("red")
+      setUserSPEColor("red");
     } else if (userSPE < 102) {
-      setUserSPEColor("orange")
+      setUserSPEColor("orange");
     } else if (userSPE < 153) {
-      setUserSPEColor("yellow")
+      setUserSPEColor("yellow");
     } else if (userSPE < 204) {
-      setUserSPEColor("lime")
+      setUserSPEColor("lime");
     } else {
-      setUserSPEColor("cyan")
+      setUserSPEColor("cyan");
     }
   }
 
@@ -310,20 +313,76 @@ function Home() {
     statStyleSPE,
   ];
 
+  //* General Functions
+  //Cycling through Types
+  function nextFirstType(event) {
+    if (userFirstType < 17) {
+      userFirstType = userFirstType + 1;
+    } else {
+      userFirstType = 0;
+    }
+
+    setUserTypes(
+      <>
+        <button
+          onClick={nextFirstType}
+          className="col-4 types"
+          style={typeStyleList[userFirstType]}
+        >
+          {typeList[userFirstType]}
+        </button>
+        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+          {typeList[userSecondType]}
+        </button>
+      </>
+    );
+  }
+
+  function nextSecondType(event) {
+    if (userSecondType < 18) {
+      userSecondType = userSecondType + 1;
+    } else {
+      userSecondType = 0;
+    }
+
+    setUserTypes(
+      <>
+        <button
+          onClick={nextFirstType}
+          className="col-4 types"
+          style={typeStyleList[userFirstType]}
+        >
+          {typeList[userFirstType]}
+        </button>
+        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+          {typeList[userSecondType]}
+        </button>
+      </>
+    );
+  }
+
   //* Randomization
   // Randomizing Types
 
   function randomizeUserType(event) {
-    let randomType1 = randomNumber(0, 16);
-    let randomType2 = randomNumber(0, 17);
+    userFirstType = randomNumber(0, 17);
+    userSecondType = randomNumber(0, 18);
+
+    if (userFirstType == userSecondType) {
+      userSecondType = 18;
+    }
 
     setUserTypes(
       <>
-        <button className="col-4 types" style={typeStyleList[randomType1]}>
-          {typeList[randomType1]}
+        <button
+          onClick={nextFirstType}
+          className="col-4 types"
+          style={typeStyleList[userFirstType]}
+        >
+          {typeList[userFirstType]}
         </button>
-        <button className="col-4 types" style={typeStyleList[randomType2]}>
-          {typeList[randomType2]}
+        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+          {typeList[userSecondType]}
         </button>
       </>
     );
@@ -353,7 +412,7 @@ function Home() {
 
     fetch("https://pokeapi.co/api/v2/ability/" + fetchAbility)
       .then((response) => response.json())
-      .then(userAbilityData)
+      .then(userAbilityData);
 
     currentUserAbility.current.value = "";
   }
