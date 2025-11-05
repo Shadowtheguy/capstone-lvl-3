@@ -7,18 +7,25 @@ function randomNumber(a, b) {
   return Math.floor(Math.random() * (b - a) + a);
 }
 
+function calculatePercentage(partialValue, totalValue) {
+  if (totalValue === 0) {
+    return 0;
+  }
+  return (partialValue / totalValue) * 100;
+}
+
 function Home() {
   //* Setting Variables
   // HTML Inserts
   const [userTypes, setUserTypes] = useState(
     <>
-      <p className="col-4 types"></p>
-      <p className="col-4 types"></p>
+      <button className="col-4 types">Select</button>
+      <button className="col-4 types">Select</button>
     </>
   );
 
   const [userAbility, setUserAbility] = useState(
-    <p className="pokemix-options">No ability selected yet, go crazy!</p>
+    "No ability selected yet, go crazy!"
   );
 
   // Lists
@@ -50,21 +57,22 @@ function Home() {
 
   // Stats
   const currentUserStats = useRef("");
+  const maxStatTotal = 255;
 
-  //! Highest Base Stat is HP at 255
-  const [HP1, setHP1] = useState(0);
-  const [ATK1, setATK1] = useState(0);
-  const [DEF1, setDEF1] = useState(0);
-  const [SATK1, setSATK1] = useState(0);
-  const [SDEF1, setSDEF1] = useState(0);
-  const [SPE1, setSPE1] = useState(0);
+  const [userHP, setUserHP] = useState(0);
+  const [userATK, setUserATK] = useState(0);
+  const [userDEF, setUserDEF] = useState(0);
+  const [userSPA, setUserSPA] = useState(0);
+  const [userSPD, setUserSPD] = useState(0);
+  const [userSPE, setUserSPE] = useState(0);
 
-  const [HP2, setHP2] = useState(0);
-  const [ATK2, setATK2] = useState(0);
-  const [DEF2, setDEF2] = useState(0);
-  const [SATK2, setSATK2] = useState(0);
-  const [SDEF2, setSDEF2] = useState(0);
-  const [SPE2, setSPE2] = useState(0);
+  // Color Selector for Stats
+  const [userHPColor, setUserHPColor] = useState("white")
+  const [userATKColor, setUserATKColor] = useState("white")
+  const [userDEFColor, setUserDEFColor] = useState("white")
+  const [userSPAColor, setUserSPAColor] = useState("white")
+  const [userSPDColor, setUserSPDColor] = useState("white")
+  const [userSPEColor, setUserSPEColor] = useState("white")
 
   //* Styles
   // Styles for specific types
@@ -163,6 +171,113 @@ function Home() {
     borderColor: "white",
   };
 
+  // Styles for each stat
+  const statStyleHP = {
+    backgroundColor: userHPColor,
+    width: calculatePercentage(userHP, maxStatTotal) + "%",
+  };
+
+  const statStyleATK = {
+    backgroundColor: userATKColor,
+    width: calculatePercentage(userATK, maxStatTotal) + "%",
+  };
+
+  const statStyleDEF = {
+    backgroundColor: userDEFColor,
+    width: calculatePercentage(userDEF, maxStatTotal) + "%",
+  };
+
+  const statStyleSPA = {
+    backgroundColor: userSPAColor,
+    width: calculatePercentage(userSPA, maxStatTotal) + "%",
+  };
+
+  const statStyleSPD = {
+    backgroundColor: userSPDColor,
+    width: calculatePercentage(userSPD, maxStatTotal) + "%",
+  };
+
+  const statStyleSPE = {
+    backgroundColor: userSPEColor,
+    width: calculatePercentage(userSPE, maxStatTotal) + "%",
+  };
+
+  // Setting the Colors for the stat bars
+  //! Bar colors only update after clicking the button again
+  function statBarColoring() {
+    if (userHP < 51) {
+      setUserHPColor("red")
+    } else if (userHP < 102) {
+      setUserHPColor("orange")
+    } else if (userHP < 153) {
+      setUserHPColor("yellow")
+    } else if (userHP < 204) {
+      setUserHPColor("lime")
+    } else {
+      setUserHPColor("cyan")
+    }
+
+    if (userATK < 51) {
+      setUserATKColor("red")
+    } else if (userATK < 102) {
+      setUserATKColor("orange")
+    } else if (userATK < 153) {
+      setUserATKColor("yellow")
+    } else if (userATK < 204) {
+      setUserATKColor("lime")
+    } else {
+      setUserATKColor("cyan")
+    }
+
+    if (userDEF < 51) {
+      setUserDEFColor("red")
+    } else if (userDEF < 102) {
+      setUserDEFColor("orange")
+    } else if (userDEF < 153) {
+      setUserDEFColor("yellow")
+    } else if (userDEF < 204) {
+      setUserDEFColor("lime")
+    } else {
+      setUserDEFColor("cyan")
+    }
+
+    if (userSPA < 51) {
+      setUserSPAColor("red")
+    } else if (userSPA < 102) {
+      setUserSPAColor("orange")
+    } else if (userSPA < 153) {
+      setUserSPAColor("yellow")
+    } else if (userSPA < 204) {
+      setUserSPAColor("lime")
+    } else {
+      setUserSPAColor("cyan")
+    }
+
+    if (userSPD < 51) {
+      setUserSPDColor("red")
+    } else if (userSPD < 102) {
+      setUserSPDColor("orange")
+    } else if (userSPD < 153) {
+      setUserSPDColor("yellow")
+    } else if (userSPD < 204) {
+      setUserSPDColor("lime")
+    } else {
+      setUserSPDColor("cyan")
+    }
+
+    if (userSPE < 51) {
+      setUserSPEColor("red")
+    } else if (userSPE < 102) {
+      setUserSPEColor("orange")
+    } else if (userSPE < 153) {
+      setUserSPEColor("yellow")
+    } else if (userSPE < 204) {
+      setUserSPEColor("lime")
+    } else {
+      setUserSPEColor("cyan")
+    }
+  }
+
   // List to cycle through
   const typeStyleList = [
     typeStyleNormal,
@@ -186,6 +301,15 @@ function Home() {
     typeStyleNone,
   ];
 
+  const statStyleList = [
+    statStyleHP,
+    statStyleATK,
+    statStyleDEF,
+    statStyleSPA,
+    statStyleSPD,
+    statStyleSPE,
+  ];
+
   //* Randomization
   // Randomizing Types
 
@@ -195,12 +319,12 @@ function Home() {
 
     setUserTypes(
       <>
-        <p className="col-4 types" style={typeStyleList[randomType1]}>
+        <button className="col-4 types" style={typeStyleList[randomType1]}>
           {typeList[randomType1]}
-        </p>
-        <p className="col-4 types" style={typeStyleList[randomType2]}>
+        </button>
+        <button className="col-4 types" style={typeStyleList[randomType2]}>
           {typeList[randomType2]}
-        </p>
+        </button>
       </>
     );
   }
@@ -215,14 +339,11 @@ function Home() {
   //* Fetching From API
 
   // Ability
-  function newUserAbility() {
-    setUserAbility(<p className="pokemix-options">{fetchedAbility}</p>);
-  }
 
   function userAbilityData(data) {
     console.log(data.effect_entries[1].effect);
 
-    setFetchedAbility(data.effect_entries[1].effect);
+    setUserAbility(data.effect_entries[1].effect);
   }
 
   function fetchUserAbility(event) {
@@ -233,15 +354,11 @@ function Home() {
     fetch("https://pokeapi.co/api/v2/ability/" + fetchAbility)
       .then((response) => response.json())
       .then(userAbilityData)
-      .then(newUserAbility());
 
     currentUserAbility.current.value = "";
   }
 
   // Stats
-  function newUserStats() {
-    //TODO Set up the CSS differently, So that the sliders work better
-  }
 
   function userStatData(data) {
     console.log(data.stats[0].base_stat + " HP");
@@ -250,6 +367,13 @@ function Home() {
     console.log(data.stats[3].base_stat + " SPA");
     console.log(data.stats[4].base_stat + " SPD");
     console.log(data.stats[5].base_stat + " SPE");
+
+    setUserHP(data.stats[0].base_stat);
+    setUserATK(data.stats[1].base_stat);
+    setUserDEF(data.stats[2].base_stat);
+    setUserSPA(data.stats[3].base_stat);
+    setUserSPD(data.stats[4].base_stat);
+    setUserSPE(data.stats[5].base_stat);
   }
 
   function fetchUserStats(event) {
@@ -262,6 +386,7 @@ function Home() {
       .then(userStatData);
 
     currentUserStats.current.value = "";
+    statBarColoring();
   }
 
   //* Actual HTML
@@ -317,7 +442,7 @@ function Home() {
                     Go
                   </button>
                 </div>
-                {userAbility}
+                <p className="pokemix-options">{userAbility}</p>
               </div>
               {/* Pokemix 1 Stats */}
               <div>
@@ -339,56 +464,50 @@ function Home() {
                   {/* HP */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleHP}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userHP}/255</p>
                   </div>
                   {/* Physical Attack */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleATK}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userATK}/255</p>
                   </div>
                   {/* Physical Defense */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleDEF}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userDEF}/255</p>
                   </div>
                   {/* Special Attack */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleSPA}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userSPA}/255</p>
                   </div>
                   {/* Special Defense */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleSPD}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userSPD}/255</p>
                   </div>
                   {/* Speed */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
+                    <div className="stat-bar col-5">
+                      <div className="stat-filled" style={statStyleSPE}></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{userSPE}/255</p>
                   </div>
                 </div>
               </div>
@@ -431,7 +550,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
@@ -440,7 +558,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
@@ -449,7 +566,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
@@ -458,7 +574,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
@@ -467,7 +582,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
@@ -476,7 +590,6 @@ function Home() {
                     <p className="col-2 stat-label">HP</p>
                     <div className="stat-bar col-6">
                       <div className="stat-filled"></div>
-                      <div className="stat-empty"></div>
                     </div>
                     <p className="col-3 small stat-label">0/255</p>
                   </div>
