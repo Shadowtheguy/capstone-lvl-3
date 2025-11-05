@@ -107,107 +107,38 @@
 
 /* Stat Bars */
 .stat-container {
-  width: 90%;
-  height: 150px;
-  background-color: black;
-  margin: 10px;
+  border-style: double;
+  margin: 5px;
+  background-color: rgb(255, 125, 125);
+  margin-bottom: 50px;
 }
 
-.stat-bar1 {
+.stat-label {
+  margin-left: 5px;
+  align-self: center;
+  color: aliceblue;
+}
+
+.stat-bar {
   position: relative;
-  top: 20px;
-  left: 30px;
-  width: 80%;
+  display: flex;
+  top: 7px;
   height: 10px;
-  background-color: white;
-  margin: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
-
-.stat-fill-HP1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
+.stat-filled{
+  background-color: #4CAF50;
+  flex-grow: 1;
+  width: 100%;
 }
 
-.stat-fill-PAtk1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
+.stat-empty{
+  background-color: #ffffff;
+  flex-grow: 1;
 }
-
-.stat-fill-PDef1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
-}
-
-.stat-fill-SAtk1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
-}
-
-.stat-fill-SDef1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
-}
-
-.stat-fill-Speed1 {
-  background-color: blue;
-  width: 99%;
-  height: 10px;
-}
-
-.hp-tag {
-  position: absolute;
-  top: 198px;
-  left: 28px;
-  color: white;
-  font-size: 10px;
-}
-
-.atk-tag {
-  position: absolute;
-  top: 218px;
-  left: 28px;
-  color: white;
-  font-size: 10px;
-}
-
-.def-tag {
-  position: absolute;
-  top: 238px;
-  left: 28px;
-  color: white;
-  font-size: 10px;
-}
-
-.satk-tag {
-  position: absolute;
-  top: 258px;
-  left: 25px;
-  color: white;
-  font-size: 10px;
-}
-
-.sdef-tag {
-  position: absolute;
-  top: 278px;
-  left: 25px;
-  color: white;
-  font-size: 10px;
-}
-
-.speed-tag {
-  position: absolute;
-  top: 298px;
-  left: 28px;
-  color: white;
-  font-size: 10px;
-}
-
 /* Random Stylings */
 
 .vs-middle {

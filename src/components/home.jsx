@@ -46,6 +46,7 @@ function Home() {
 
   // Ability
   const currentUserAbility = useRef("");
+  const [fetchedAbility, setFetchedAbility] = useState("");
 
   // Stats
   const currentUserStats = useRef("");
@@ -204,13 +205,26 @@ function Home() {
     );
   }
 
+  // Randomizing Ability
+
   // All Together
   function randomizeUserPokemon(event) {
     randomizeUserType();
   }
 
   //* Fetching From API
+
   // Ability
+  function newUserAbility() {
+    setUserAbility(<p className="pokemix-options">{fetchedAbility}</p>);
+  }
+
+  function userAbilityData(data) {
+    console.log(data.effect_entries[1].effect);
+
+    setFetchedAbility(data.effect_entries[1].effect);
+  }
+
   function fetchUserAbility(event) {
     event.preventDefault();
     const abilityInput = currentUserAbility.current.value;
@@ -218,22 +232,36 @@ function Home() {
 
     fetch("https://pokeapi.co/api/v2/ability/" + fetchAbility)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then(userAbilityData)
+      .then(newUserAbility());
 
     currentUserAbility.current.value = "";
   }
 
   // Stats
+  function newUserStats() {
+    //TODO Set up the CSS differently, So that the sliders work better
+  }
+
+  function userStatData(data) {
+    console.log(data.stats[0].base_stat + " HP");
+    console.log(data.stats[1].base_stat + " ATK");
+    console.log(data.stats[2].base_stat + " DEF");
+    console.log(data.stats[3].base_stat + " SPA");
+    console.log(data.stats[4].base_stat + " SPD");
+    console.log(data.stats[5].base_stat + " SPE");
+  }
+
   function fetchUserStats(event) {
     event.preventDefault();
     const statInput = currentUserStats.current.value;
-    const fetchStats = statInput.toLowerCase.replace(" ", "-");
+    const fetchStats = statInput.toLowerCase().replace(" ", "-");
 
     fetch("https://pokeapi.co/api/v2/pokemon/" + fetchStats)
       .then((response) => response.json())
-      .then((data) => console.log(data));
+      .then(userStatData);
 
-    currentUserStats.current.value ="";
+    currentUserStats.current.value = "";
   }
 
   //* Actual HTML
@@ -300,7 +328,7 @@ function Home() {
                     ref={currentUserStats}
                   />
                   <button
-                    type="submit"
+                    onClick={fetchUserStats}
                     className="ability-button btn btn-danger col-2"
                   >
                     Go
@@ -309,46 +337,58 @@ function Home() {
                 {/* Actual Stat Container */}
                 <div className="stat-container">
                   {/* HP */}
-                  <div>
-                    <p className="hp-tag">HP</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-HP1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Physical Attack */}
-                  <div>
-                    <p className="atk-tag">ATK</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-PAtk1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Physical Defense */}
-                  <div>
-                    <p className="def-tag">DEF</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-PDef1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Special Attack */}
-                  <div>
-                    <p className="satk-tag">SATK</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-SAtk1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Special Defense */}
-                  <div>
-                    <p className="sdef-tag">SDEF</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-SDef1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Speed */}
-                  <div>
-                    <p className="speed-tag">SPE</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-Speed1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                 </div>
               </div>
@@ -387,46 +427,58 @@ function Home() {
                 {/* Actual Stat Container */}
                 <div className="stat-container">
                   {/* HP */}
-                  <div>
-                    <p className="hp-tag">HP</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-HP1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Physical Attack */}
-                  <div>
-                    <p className="atk-tag">ATK</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-PAtk1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Physical Defense */}
-                  <div>
-                    <p className="def-tag">DEF</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-PDef1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Special Attack */}
-                  <div>
-                    <p className="satk-tag">SATK</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-SAtk1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Special Defense */}
-                  <div>
-                    <p className="sdef-tag">SDEF</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-SDef1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                   {/* Speed */}
-                  <div>
-                    <p className="speed-tag">SPE</p>
-                    <div className="stat-bar1">
-                      <div className="stat-fill-Speed1"></div>
+                  <div className="row">
+                    <p className="col-2 stat-label">HP</p>
+                    <div className="stat-bar col-6">
+                      <div className="stat-filled"></div>
+                      <div className="stat-empty"></div>
                     </div>
+                    <p className="col-3 small stat-label">0/255</p>
                   </div>
                 </div>
               </div>
