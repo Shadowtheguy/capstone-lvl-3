@@ -1,5 +1,3 @@
-// need this later https://pokeapi.co/api/v2/ability?offest=367&limit=367
-
 import { useState, useRef } from "react";
 
 //* Functions
@@ -19,14 +17,27 @@ function Home() {
   // HTML Inserts
   const [userTypes, setUserTypes] = useState(
     <>
-      <button onClick={nextFirstType} className="col-4 types">Select</button>
-      <button onClick={nextSecondType} className="col-4 types">Select</button>
+      <button onClick={nextFirstType} className="col-4 types">
+        Select
+      </button>
+      <button onClick={nextSecondType} className="col-4 types">
+        Select
+      </button>
+    </>
+  );
+
+  const [opponentTypes, setOpponentTypes] = useState(
+    <>
+      <button className="col-4 types">Loading..</button>
+      <button className="col-4 types">Loading..</button>
     </>
   );
 
   const [userAbility, setUserAbility] = useState(
     "No ability selected yet, go crazy!"
   );
+
+  const [opponentAbility, setOpponentAbility] = useState("Loading..");
 
   // Types
   let userFirstType = 17;
@@ -69,6 +80,13 @@ function Home() {
   const [userSPD, setUserSPD] = useState(0);
   const [userSPE, setUserSPE] = useState(0);
 
+  const [opponentHP, setOpponentHP] = useState(0);
+  const [opponentATK, setOpponentATK] = useState(0);
+  const [opponentDEF, setOpponentDEF] = useState(0);
+  const [opponentSPA, setOpponentSPA] = useState(0);
+  const [opponentSPD, setOpponentSPD] = useState(0);
+  const [opponentSPE, setOpponentSPE] = useState(0);
+
   // Color Selector for Stats
   const [userHPColor, setUserHPColor] = useState("white");
   const [userATKColor, setUserATKColor] = useState("white");
@@ -76,6 +94,13 @@ function Home() {
   const [userSPAColor, setUserSPAColor] = useState("white");
   const [userSPDColor, setUserSPDColor] = useState("white");
   const [userSPEColor, setUserSPEColor] = useState("white");
+
+  const [opHPColor, setOpHPColor] = useState("white");
+  const [opATKColor, setOpATKColor] = useState("white");
+  const [opDEFColor, setOpDEFColor] = useState("white");
+  const [opSPAColor, setOpSPAColor] = useState("white");
+  const [opSPDColor, setOpSPDColor] = useState("white");
+  const [opSPEColor, setOpSPEColor] = useState("white");
 
   //* Styles
   // Styles for specific types
@@ -205,6 +230,36 @@ function Home() {
     width: calculatePercentage(userSPE, maxStatTotal) + "%",
   };
 
+  const opponentStyleHP = {
+    backgroundColor: opHPColor,
+    width: calculatePercentage(opponentHP, maxStatTotal) + "%",
+  };
+
+  const opponentStyleATK = {
+    backgroundColor: opATKColor,
+    width: calculatePercentage(opponentATK, maxStatTotal) + "%",
+  };
+
+  const opponentStyleDEF = {
+    backgroundColor: opDEFColor,
+    width: calculatePercentage(opponentDEF, maxStatTotal) + "%",
+  };
+
+  const opponentStyleSPA = {
+    backgroundColor: opSPAColor,
+    width: calculatePercentage(opponentSPA, maxStatTotal) + "%",
+  };
+
+  const opponentStyleSPD = {
+    backgroundColor: opSPDColor,
+    width: calculatePercentage(opponentSPD, maxStatTotal) + "%",
+  };
+
+  const opponentStyleSPE = {
+    backgroundColor: opSPEColor,
+    width: calculatePercentage(opponentSPE, maxStatTotal) + "%",
+  };
+
   // Setting the Colors for the stat bars
   //! Bar colors only update after clicking the button again
   function statBarColoring() {
@@ -281,6 +336,80 @@ function Home() {
     }
   }
 
+  function opponentBarColoring() {
+    if (opponentHP < 51) {
+      setOpHPColor("red");
+    } else if (opponentHP < 102) {
+      setOpHPColor("orange");
+    } else if (opponentHP < 153) {
+      setOpHPColor("yellow");
+    } else if (opponentHP < 204) {
+      setOpHPColor("lime");
+    } else {
+      setOpHPColor("cyan");
+    }
+
+    if (opponentATK < 51) {
+      setOpATKColor("red");
+    } else if (opponentATK < 102) {
+      setOpATKColor("orange");
+    } else if (opponentATK < 153) {
+      setOpATKColor("yellow");
+    } else if (opponentATK < 204) {
+      setOpATKColor("lime");
+    } else {
+      setOpATKColor("cyan");
+    }
+
+    if (opponentDEF < 51) {
+      setOpDEFColor("red");
+    } else if (opponentDEF < 102) {
+      setOpDEFColor("orange");
+    } else if (opponentDEF < 153) {
+      setOpDEFColor("yellow");
+    } else if (opponentDEF < 204) {
+      setOpDEFColor("lime");
+    } else {
+      setOpDEFColor("cyan");
+    }
+
+    if (opponentSPA < 51) {
+      setOpSPAColor("red");
+    } else if (opponentSPA < 102) {
+      setOpSPAColor("orange");
+    } else if (opponentSPA < 153) {
+      setOpSPAColor("yellow");
+    } else if (opponentSPA < 204) {
+      setOpSPAColor("lime");
+    } else {
+      setOpSPAColor("cyan");
+    }
+
+    if (opponentSPD < 51) {
+      setOpSPDColor("red");
+    } else if (opponentSPD < 102) {
+      setOpSPDColor("orange");
+    } else if (opponentSPD < 153) {
+      setOpSPDColor("yellow");
+    } else if (opponentSPD < 204) {
+      setOpSPDColor("lime");
+    } else {
+      setOpSPDColor("cyan");
+    }
+
+    if (opponentSPE < 51) {
+      setOpSPEColor("red");
+    } else if (opponentSPE < 102) {
+      setOpSPEColor("orange");
+    } else if (opponentSPE < 153) {
+      setOpSPEColor("yellow");
+    } else if (opponentSPE < 204) {
+      setOpSPEColor("lime");
+    } else {
+      setOpSPEColor("cyan");
+    }
+  }
+
   // List to cycle through
   const typeStyleList = [
     typeStyleNormal,
@@ -304,15 +433,6 @@ function Home() {
     typeStyleNone,
   ];
 
-  const statStyleList = [
-    statStyleHP,
-    statStyleATK,
-    statStyleDEF,
-    statStyleSPA,
-    statStyleSPD,
-    statStyleSPE,
-  ];
-
   //* General Functions
   //Cycling through Types
   function nextFirstType(event) {
@@ -331,7 +451,11 @@ function Home() {
         >
           {typeList[userFirstType]}
         </button>
-        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+        <button
+          onClick={nextSecondType}
+          className="col-4 types"
+          style={typeStyleList[userSecondType]}
+        >
           {typeList[userSecondType]}
         </button>
       </>
@@ -354,14 +478,18 @@ function Home() {
         >
           {typeList[userFirstType]}
         </button>
-        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+        <button
+          onClick={nextSecondType}
+          className="col-4 types"
+          style={typeStyleList[userSecondType]}
+        >
           {typeList[userSecondType]}
         </button>
       </>
     );
   }
 
-  //* Randomization
+  //* Randomization for User
   // Randomizing Types
 
   function randomizeUserType(event) {
@@ -381,7 +509,11 @@ function Home() {
         >
           {typeList[userFirstType]}
         </button>
-        <button onClick={nextSecondType} className="col-4 types" style={typeStyleList[userSecondType]}>
+        <button
+          onClick={nextSecondType}
+          className="col-4 types"
+          style={typeStyleList[userSecondType]}
+        >
           {typeList[userSecondType]}
         </button>
       </>
@@ -389,10 +521,78 @@ function Home() {
   }
 
   // Randomizing Ability
+  function randomizeUserAbility() {
+    let randomAbilityNumber = randomNumber(1, 307);
+
+    fetch("https://pokeapi.co/api/v2/ability/" + randomAbilityNumber)
+      .then((response) => response.json())
+      .then(userAbilityData);
+  }
+
+  //Randomizing Stats
+  function randomUserStats() {
+    let randomStatNumber = randomNumber(1, 1025);
+
+    fetch("https://pokeapi.co/api/v2/pokemon/" + randomStatNumber)
+      .then((response) => response.json())
+      .then(userStatData);
+  }
 
   // All Together
   function randomizeUserPokemon(event) {
     randomizeUserType();
+    randomizeUserAbility();
+    randomUserStats();
+    statBarColoring();
+  }
+
+  //* Randomization for Opponent
+  // Randomizing Types
+
+  function randomizeOpponentType(event) {
+    let OpFirstType = randomNumber(0, 17);
+    let OpSecondType = randomNumber(0, 18);
+
+    if (OpFirstType == OpSecondType) {
+      OpSecondType = 18;
+    }
+
+    setOpponentTypes(
+      <>
+        <button className="col-4 types" style={typeStyleList[OpFirstType]}>
+          {typeList[OpFirstType]}
+        </button>
+        <button className="col-4 types" style={typeStyleList[OpSecondType]}>
+          {typeList[OpSecondType]}
+        </button>
+      </>
+    );
+  }
+
+  // Randomizing Ability
+  function randomizeOpponentAbility() {
+    let randomAbilityNumber = randomNumber(1, 307);
+
+    fetch("https://pokeapi.co/api/v2/ability/" + randomAbilityNumber)
+      .then((response) => response.json())
+      .then(opponentAbilityData);
+  }
+
+  //Randomizing Stats
+  function randomOpponentStats() {
+    let randomStatNumber = randomNumber(1, 1025);
+
+    fetch("https://pokeapi.co/api/v2/pokemon/" + randomStatNumber)
+      .then((response) => response.json())
+      .then(opponentStatData);
+  }
+
+  // All Together
+  function randomizeOpPokemon(event) {
+    randomizeOpponentType();
+    randomizeOpponentAbility();
+    randomOpponentStats();
+    opponentBarColoring();
   }
 
   //* Fetching From API
@@ -400,9 +600,27 @@ function Home() {
   // Ability
 
   function userAbilityData(data) {
-    console.log(data.effect_entries[1].effect);
+    if (data.effect_entries[1] == undefined) {
+      console.log(data.effect_entries[0].effect);
 
-    setUserAbility(data.effect_entries[1].effect);
+      setUserAbility(data.effect_entries[0].effect);
+    } else {
+      console.log(data.effect_entries[1].effect);
+
+      setUserAbility(data.effect_entries[1].effect);
+    }
+  }
+
+  function opponentAbilityData(data) {
+    if (data.effect_entries[1] == undefined) {
+      console.log(data.effect_entries[0].effect);
+
+      setOpponentAbility(data.effect_entries[0].effect);
+    } else {
+      console.log(data.effect_entries[1].effect);
+
+      setOpponentAbility(data.effect_entries[1].effect);
+    }
   }
 
   function fetchUserAbility(event) {
@@ -433,6 +651,22 @@ function Home() {
     setUserSPA(data.stats[3].base_stat);
     setUserSPD(data.stats[4].base_stat);
     setUserSPE(data.stats[5].base_stat);
+  }
+
+  function opponentStatData(data) {
+    console.log(data.stats[0].base_stat + " HP");
+    console.log(data.stats[1].base_stat + " ATK");
+    console.log(data.stats[2].base_stat + " DEF");
+    console.log(data.stats[3].base_stat + " SPA");
+    console.log(data.stats[4].base_stat + " SPD");
+    console.log(data.stats[5].base_stat + " SPE");
+
+    setOpponentHP(data.stats[0].base_stat);
+    setOpponentATK(data.stats[1].base_stat);
+    setOpponentDEF(data.stats[2].base_stat);
+    setOpponentSPA(data.stats[3].base_stat);
+    setOpponentSPD(data.stats[4].base_stat);
+    setOpponentSPE(data.stats[5].base_stat);
   }
 
   function fetchUserStats(event) {
@@ -589,13 +823,12 @@ function Home() {
             <div className="pokemix-card card">
               <div className="pokemix-options row">
                 <h5 className="pokemix-options col-3">Type:</h5>
-                <p className="col-4 types" id="opponentType1"></p>
-                <p className="col-4 types" id="opponentType2"></p>
+                {opponentTypes}
               </div>
               {/* Pokemix 2 Ability */}
               <div>
                 <h5 className="pokemix-options adjust-pokemix-2">Ability:</h5>
-                <p className="pokemix-options">placeholder</p>
+                <p className="pokemix-options">{opponentAbility}</p>
               </div>
               {/* Pokemix 2 Stats */}
               <div>
@@ -607,54 +840,75 @@ function Home() {
                   {/* HP */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleHP}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentHP}/255</p>
                   </div>
                   {/* Physical Attack */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleATK}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentATK}/255</p>
                   </div>
                   {/* Physical Defense */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleDEF}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentDEF}/255</p>
                   </div>
                   {/* Special Attack */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleSPA}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentSPA}/255</p>
                   </div>
                   {/* Special Defense */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleSPD}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentSPD}/255</p>
                   </div>
                   {/* Speed */}
                   <div className="row">
                     <p className="col-2 stat-label">HP</p>
-                    <div className="stat-bar col-6">
-                      <div className="stat-filled"></div>
+                    <div className="stat-bar col-5">
+                      <div
+                        className="stat-filled"
+                        style={opponentStyleSPE}
+                      ></div>
                     </div>
-                    <p className="col-3 small stat-label">0/255</p>
+                    <p className="col-4 small stat-label">{opponentSPE}/255</p>
                   </div>
                 </div>
               </div>
-              <button className="btn btn-dark m-1 bottom-button">
+              <button
+                onClick={randomizeOpPokemon}
+                className="btn btn-dark m-1 bottom-button"
+              >
                 New Opponent!
               </button>
             </div>
