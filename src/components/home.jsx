@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { supabase } from '../utils/supabase'
+import { supabase } from "../utils/supabase";
 
 //* Functions
 function randomNumber(a, b) {
@@ -44,7 +44,6 @@ function Home() {
   let userFirstType = 17;
   let userSecondType = 18;
 
-  // Lists
   const typeList = [
     "Normal",
     "Grass",
@@ -110,6 +109,15 @@ function Home() {
   const [SPASliderValue, setSPASliderValue] = useState(130);
   const [SPDSliderValue, setSPDSliderValue] = useState(130);
   const [SPESliderValue, setSPESliderValue] = useState(130);
+
+  //Checkbox Lists
+  let checkedGood = [];
+
+  let checkedBad = [];
+
+  //Type Description
+  let goodAgainst = "Good Against: ";
+  let badAgainst = "Bad Against: ";
 
   //* Styles
   // Styles for specific types
@@ -206,6 +214,50 @@ function Home() {
   const typeStyleNone = {
     backgroundColor: "white",
     borderColor: "white",
+  };
+
+  // Style For Disabled Buttons
+  const [disabledTypes, setDisabledTypes] = useState({
+    NormalGood: false,
+    WaterGood: false,
+    GrassGood: false,
+    FireGood: false,
+    FlyingGood: false,
+    FightingGood: false,
+    PsychicGood: false,
+    DarkGood: false,
+    DragonGood: false,
+    FairyGood: false,
+    PoisonGood: false,
+    BugGood: false,
+    IceGood: false,
+    SteelGood: false,
+    RockGood: false,
+    GroundGood: false,
+    ElectricGood: false,
+    GhostGood: false,
+    NormalBad: false,
+    WaterBad: false,
+    GrassBad: false,
+    FireBad: false,
+    FlyingBad: false,
+    FightingBad: false,
+    PsychicBad: false,
+    DarkBad: false,
+    DragonBad: false,
+    FairyBad: false,
+    PoisonBad: false,
+    BugBad: false,
+    IceBad: false,
+    SteelBad: false,
+    RockBad: false,
+    GroundBad: false,
+    ElectricBad: false,
+    GhostBad: false,
+  });
+
+  const disabledButton = {
+    opacity: "70%",
   };
 
   // Styles for each stat
@@ -717,7 +769,115 @@ function Home() {
     setSPESliderValue(parseInt(event.target.value));
   }
 
+  //Checkbox Fixing
+  function typeGoodCheckboxChange(event) {
+    let currentCheckGood;
+
+    if (event.target.checked === true) {
+      currentCheckGood = event.target.value;
+      checkedGood.push(currentCheckGood);
+    }
+
+    if (event.target.checked === false) {
+      currentCheckGood = event.target.value;
+      checkedGood = checkedGood.filter((item) => item !== currentCheckGood);
+    }
+    console.log(checkedGood);
+    console.log(currentCheckGood + "Good");
+
+    setDisabledTypes((prev) => ({
+      ...prev,
+      [currentCheckGood + "Good"]: !prev[currentCheckGood + "Good"],
+    }));
+  }
+
+  function typeBadCheckboxChange(event) {
+    let currentCheckBad;
+
+    if (event.target.checked === true) {
+      currentCheckBad = event.target.value;
+      checkedBad.push(currentCheckBad);
+    }
+
+    if (event.target.checked === false) {
+      currentCheckBad = event.target.value;
+      checkedBad = checkedBad.filter((item) => item !== currentCheckBad);
+    }
+    console.log(checkedBad);
+
+    setDisabledTypes((prev) => ({
+      ...prev,
+      [currentCheckBad + "Bad"]: !prev[currentCheckBad + "Bad"],
+    }));
+  }
+
+  function getStyle(type, baseStyle) {
+    return {
+      ...baseStyle,
+      ...(disabledTypes[type] ? disabledButton : {}),
+    };
+  }
+
+  function makeTypeDescription() {
+    goodAgainst = "Good Against: ";
+    badAgainst = "Bad Against: ";
+
+    for (let i = 0; i < checkedGood.length; i++) {
+      goodAgainst = goodAgainst + checkedGood[i] + " ";
+    }
+
+    for (let i = 0; i < checkedBad.length; i++) {
+      badAgainst = badAgainst + checkedBad[i] + " ";
+    }
+
+    console.log(goodAgainst);
+    console.log(badAgainst);
+  }
+
   //Send to Supabase
+  async function handleAddCustomPokemix(event) {
+    event.preventDefault();
+    const userName = event.target.elements.username.value;
+    const customType = event.target.elements.customType.value;
+    const customAbilityName = event.target.elements.customAbilityName.value;
+    const customAbilityDescription =
+      event.target.elements.customAbilityDescription.value;
+    const ideaName = event.target.elements.creationName.value;
+
+    makeTypeDescription();
+
+    const newPokemix = {
+      username: userName,
+      type: customType,
+      type_description: goodAgainst + "\n" + badAgainst,
+      ability_name: customAbilityName,
+      ability_description: customAbilityDescription,
+      bst:
+        HPSliderValue +
+        ATKSliderValue +
+        DEFSliderValue +
+        SPASliderValue +
+        SPDSliderValue +
+        SPESliderValue,
+      speed: SPESliderValue,
+      physical_attack: ATKSliderValue,
+      physical_defense: DEFSliderValue,
+      special_attack: SPASliderValue,
+      special_defense: SPDSliderValue,
+      hp: HPSliderValue,
+      idea_name: ideaName,
+    };
+
+    console.log(newPokemix);
+
+    await supabase.from("Pokemix Entries").insert(newPokemix);
+
+    event.target.elements.username.value = "";
+    event.target.elements.customType.value = "";
+    event.target.elements.customAbilityName.value = "";
+    event.target.elements.customAbilityDescription.value = "";
+    event.target.elements.creationName.value = "";
+  }
 
   //* Actual HTML
   return (
@@ -960,7 +1120,7 @@ function Home() {
           the form should pop up, fill it out then BAM! Your idea will be added
           and in the pool for selection if people turn on custom ideas!
         </p>
-        <form className="m-3">
+        <form onSubmit={handleAddCustomPokemix} className="m-3">
           <div className="form-formatting">
             <label>
               User Name
@@ -979,184 +1139,274 @@ function Home() {
             <label>
               Good Against:
               <br />
-              <label className="fake-button" style={typeStyleNormal}>
+              <label
+                className="fake-button"
+                style={getStyle("NormalGood", typeStyleNormal)}
+              >
                 {" "}
                 Normal
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="normalGood"
-                  id="normalGood"
+                  name="good"
+                  id="good"
+                  value="Normal"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGrass}>
+              <label
+                className="fake-button"
+                style={getStyle("GrassGood", typeStyleGrass)}
+              >
                 {" "}
                 Grass
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="grassGood"
-                  id="grassGood"
+                  name="good"
+                  id="good"
+                  value="Grass"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFire}>
+              <label
+                className="fake-button"
+                style={getStyle("FireGood", typeStyleFire)}
+              >
                 {" "}
                 Fire
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="fireGood"
-                  id="fireGood"
+                  name="good"
+                  id="good"
+                  value="Fire"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleWater}>
+              <label
+                className="fake-button"
+                style={getStyle("WaterGood", typeStyleWater)}
+              >
                 {" "}
                 Water
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="waterGood"
-                  id="waterGood"
+                  name="good"
+                  id="good"
+                  value="Water"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleBug}>
+              <label
+                className="fake-button"
+                style={getStyle("BugGood", typeStyleBug)}
+              >
                 {" "}
                 Bug
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="bugGood"
-                  id="bugGood"
+                  name="good"
+                  id="good"
+                  value="Bug"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFlying}>
+              <label
+                className="fake-button"
+                style={getStyle("FlyingGood", typeStyleFlying)}
+              >
                 {" "}
                 Flying
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="flyingGood"
-                  id="flyingGood"
+                  name="good"
+                  id="good"
+                  value="Flying"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFighting}>
+              <label
+                className="fake-button"
+                style={getStyle("FightingGood", typeStyleFighting)}
+              >
                 {" "}
                 Fighting
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="fightingGood"
-                  id="fightingGood"
+                  name="good"
+                  id="good"
+                  value="Fighting"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStylePsychic}>
+              <label
+                className="fake-button"
+                style={getStyle("PsychicGood", typeStylePsychic)}
+              >
                 {" "}
                 Psychic
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="psychicGood"
-                  id="psychicGood"
+                  name="good"
+                  id="good"
+                  value="Psychic"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleDark}>
+              <label
+                className="fake-button"
+                style={getStyle("DarkGood", typeStyleDark)}
+              >
                 {" "}
                 Dark
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="darkGood"
-                  id="darkGood"
+                  name="good"
+                  id="good"
+                  value="Dark"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleSteel}>
+              <label
+                className="fake-button"
+                style={getStyle("SteelGood", typeStyleSteel)}
+              >
                 {" "}
                 Steel
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="steelGood"
-                  id="steelGood"
+                  name="good"
+                  id="good"
+                  value="Steel"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleRock}>
+              <label
+                className="fake-button"
+                style={getStyle("RockGood", typeStyleRock)}
+              >
                 {" "}
                 Rock
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="rockGood"
-                  id="rockGood"
+                  name="good"
+                  id="good"
+                  value="Rock"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGround}>
+              <label
+                className="fake-button"
+                style={getStyle("GroundGood", typeStyleGround)}
+              >
                 {" "}
                 Ground
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="groundGood"
-                  id="groundGood"
+                  name="good"
+                  id="good"
+                  value="Ground"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleElectric}>
+              <label
+                className="fake-button"
+                style={getStyle("ElectricGood", typeStyleElectric)}
+              >
                 {" "}
                 Electric
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="electricGood"
-                  id="electricGood"
+                  name="good"
+                  id="good"
+                  value="Electric"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStylePoison}>
+              <label
+                className="fake-button"
+                style={getStyle("PoisonGood", typeStylePoison)}
+              >
                 {" "}
                 Poison
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="poisonGood"
-                  id="poisonGood"
+                  name="good"
+                  id="good"
+                  value="Poison"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGhost}>
+              <label
+                className="fake-button"
+                style={getStyle("GhostGood", typeStyleGhost)}
+              >
                 {" "}
                 Ghost
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="ghostGood"
-                  id="ghostGood"
+                  name="good"
+                  id="good"
+                  value="Ghost"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleIce}>
+              <label
+                className="fake-button"
+                style={getStyle("IceGood", typeStyleIce)}
+              >
                 {" "}
                 Ice
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="iceGood"
-                  id="iceGood"
+                  name="good"
+                  id="good"
+                  value="Ice"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleDragon}>
+              <label
+                className="fake-button"
+                style={getStyle("DragonGood", typeStyleDragon)}
+              >
                 {" "}
                 Dragon
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="dragonGood"
-                  id="dragonGood"
+                  name="good"
+                  id="good"
+                  value="Dragon"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFairy}>
+              <label
+                className="fake-button"
+                style={getStyle("FairyGood", typeStyleFairy)}
+              >
                 {" "}
                 Fairy
                 <input
                   className="check-to-button"
                   type="checkbox"
-                  name="fairyGood"
-                  id="fairyGood"
+                  name="good"
+                  id="good"
+                  value="Fairy"
+                  onChange={typeGoodCheckboxChange}
                 />
               </label>
             </label>
@@ -1165,7 +1415,10 @@ function Home() {
             <label>
               Bad Against:
               <br />
-              <label className="fake-button" style={typeStyleNormal}>
+              <label
+                className="fake-button"
+                style={getStyle("NormalBad", typeStyleNormal)}
+              >
                 {" "}
                 Normal
                 <input
@@ -1173,9 +1426,14 @@ function Home() {
                   type="checkbox"
                   name="normalBad"
                   id="normalBad"
+                  value="Normal"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGrass}>
+              <label
+                className="fake-button"
+                style={getStyle("GrassBad", typeStyleGrass)}
+              >
                 {" "}
                 Grass
                 <input
@@ -1183,9 +1441,14 @@ function Home() {
                   type="checkbox"
                   name="grassBad"
                   id="grassBad"
+                  value="Grass"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFire}>
+              <label
+                className="fake-button"
+                style={getStyle("FireBad", typeStyleFire)}
+              >
                 {" "}
                 Fire
                 <input
@@ -1193,9 +1456,14 @@ function Home() {
                   type="checkbox"
                   name="fireBad"
                   id="fireBad"
+                  value="Fire"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleWater}>
+              <label
+                className="fake-button"
+                style={getStyle("WaterBad", typeStyleWater)}
+              >
                 {" "}
                 Water
                 <input
@@ -1203,9 +1471,14 @@ function Home() {
                   type="checkbox"
                   name="waterBad"
                   id="waterBad"
+                  value="Water"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleBug}>
+              <label
+                className="fake-button"
+                style={getStyle("BugBad", typeStyleBug)}
+              >
                 {" "}
                 Bug
                 <input
@@ -1213,9 +1486,14 @@ function Home() {
                   type="checkbox"
                   name="bugBad"
                   id="bugBad"
+                  value="Bug"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFlying}>
+              <label
+                className="fake-button"
+                style={getStyle("FlyingBad", typeStyleFlying)}
+              >
                 {" "}
                 Flying
                 <input
@@ -1223,9 +1501,14 @@ function Home() {
                   type="checkbox"
                   name="flyingBad"
                   id="flyingBad"
+                  value="Flying"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFighting}>
+              <label
+                className="fake-button"
+                style={getStyle("FightingBad", typeStyleFighting)}
+              >
                 {" "}
                 Fighting
                 <input
@@ -1233,9 +1516,14 @@ function Home() {
                   type="checkbox"
                   name="fightingBad"
                   id="fightingBad"
+                  value="Fighting"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStylePsychic}>
+              <label
+                className="fake-button"
+                style={getStyle("PsychicBad", typeStylePsychic)}
+              >
                 {" "}
                 Psychic
                 <input
@@ -1243,9 +1531,14 @@ function Home() {
                   type="checkbox"
                   name="psychicBad"
                   id="psychicBad"
+                  value="Psychic"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleDark}>
+              <label
+                className="fake-button"
+                style={getStyle("DarkBad", typeStyleDark)}
+              >
                 {" "}
                 Dark
                 <input
@@ -1253,9 +1546,14 @@ function Home() {
                   type="checkbox"
                   name="darkBad"
                   id="darkBad"
+                  value="Dark"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleSteel}>
+              <label
+                className="fake-button"
+                style={getStyle("SteelBad", typeStyleSteel)}
+              >
                 {" "}
                 Steel
                 <input
@@ -1263,9 +1561,14 @@ function Home() {
                   type="checkbox"
                   name="steelBad"
                   id="steelBad"
+                  value="Steel"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleRock}>
+              <label
+                className="fake-button"
+                style={getStyle("RockBad", typeStyleRock)}
+              >
                 {" "}
                 Rock
                 <input
@@ -1273,9 +1576,14 @@ function Home() {
                   type="checkbox"
                   name="rockBad"
                   id="rockBad"
+                  value="Rock"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGround}>
+              <label
+                className="fake-button"
+                style={getStyle("GroundBad", typeStyleGround)}
+              >
                 {" "}
                 Ground
                 <input
@@ -1283,9 +1591,14 @@ function Home() {
                   type="checkbox"
                   name="groundBad"
                   id="groundBad"
+                  value="Ground"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleElectric}>
+              <label
+                className="fake-button"
+                style={getStyle("ElectricBad", typeStyleElectric)}
+              >
                 {" "}
                 Electric
                 <input
@@ -1293,9 +1606,14 @@ function Home() {
                   type="checkbox"
                   name="electricBad"
                   id="electricBad"
+                  value="Electric"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStylePoison}>
+              <label
+                className="fake-button"
+                style={getStyle("PoisonBad", typeStylePoison)}
+              >
                 {" "}
                 Poison
                 <input
@@ -1303,9 +1621,14 @@ function Home() {
                   type="checkbox"
                   name="poisonBad"
                   id="poisonBad"
+                  value="Ghost"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleGhost}>
+              <label
+                className="fake-button"
+                style={getStyle("GhostBad", typeStyleGhost)}
+              >
                 {" "}
                 Ghost
                 <input
@@ -1313,9 +1636,14 @@ function Home() {
                   type="checkbox"
                   name="ghostBad"
                   id="ghostBad"
+                  value="Ghost"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleIce}>
+              <label
+                className="fake-button"
+                style={getStyle("IceBad", typeStyleIce)}
+              >
                 {" "}
                 Ice
                 <input
@@ -1323,9 +1651,14 @@ function Home() {
                   type="checkbox"
                   name="iceBad"
                   id="iceBad"
+                  value="Ice"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleDragon}>
+              <label
+                className="fake-button"
+                style={getStyle("DragonBad", typeStyleDragon)}
+              >
                 {" "}
                 Dragon
                 <input
@@ -1333,9 +1666,14 @@ function Home() {
                   type="checkbox"
                   name="dragonBad"
                   id="dragonBad"
+                  value="Dragon"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
-              <label className="fake-button" style={typeStyleFairy}>
+              <label
+                className="fake-button"
+                style={getStyle("FairyBad", typeStyleFairy)}
+              >
                 {" "}
                 Fairy
                 <input
@@ -1343,6 +1681,8 @@ function Home() {
                   type="checkbox"
                   name="fairyBad"
                   id="fairyBad"
+                  value="Fairy"
+                  onChange={typeBadCheckboxChange}
                 />
               </label>
             </label>
@@ -1351,14 +1691,23 @@ function Home() {
             <label>
               Custom Ability Name
               <br />
-              <input type="text" id="customAbilityName" name="customAbilityName"/>
+              <input
+                type="text"
+                id="customAbilityName"
+                name="customAbilityName"
+              />
             </label>
           </div>
           <div className="form-formatting">
             <label>
               Custom Ability Description
               <br />
-              <textarea className="text-area-big" type="text" name="customAbilityDescription" id="customAbilityDescription"/>
+              <textarea
+                className="text-area-big"
+                type="text"
+                name="customAbilityDescription"
+                id="customAbilityDescription"
+              />
             </label>
           </div>
           <div className="form-formatting">
@@ -1435,13 +1784,13 @@ function Home() {
             <label>
               Creation Name
               <br />
-              <input type="text" id="creationName" name="creationName"/>
+              <input type="text" id="creationName" name="creationName" />
             </label>
           </div>
+          <button className="btn btn-success mx-auto d-grid" type="submit">
+            Click Here To Add Custom Ideas!
+          </button>
         </form>
-        <button className="btn btn-success mx-auto d-grid" type="submit">
-          Click Here To Add Custom Ideas!
-        </button>
       </section>
     </>
   );

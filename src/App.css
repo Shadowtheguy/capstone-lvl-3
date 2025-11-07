@@ -206,3 +206,7 @@
   margin-top: 4px;
   padding-bottom: 1px;
 }
+
+.clicked {
+  opacity: 70%;
+}
