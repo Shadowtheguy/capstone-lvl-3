@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { supabase } from '../utils/supabase'
 
 //* Functions
 function randomNumber(a, b) {
@@ -101,6 +102,14 @@ function Home() {
   const [opSPAColor, setOpSPAColor] = useState("white");
   const [opSPDColor, setOpSPDColor] = useState("white");
   const [opSPEColor, setOpSPEColor] = useState("white");
+
+  //Inputs
+  const [HPSliderValue, setHPSliderValue] = useState(130);
+  const [ATKSliderValue, setATKSliderValue] = useState(130);
+  const [DEFSliderValue, setDEFSliderValue] = useState(130);
+  const [SPASliderValue, setSPASliderValue] = useState(130);
+  const [SPDSliderValue, setSPDSliderValue] = useState(130);
+  const [SPESliderValue, setSPESliderValue] = useState(130);
 
   //* Styles
   // Styles for specific types
@@ -682,6 +691,34 @@ function Home() {
     statBarColoring();
   }
 
+  //* Input Fields
+  //Stat Sliders
+  function HPSliderChange(event) {
+    setHPSliderValue(parseInt(event.target.value));
+  }
+
+  function ATKSliderChange(event) {
+    setATKSliderValue(parseInt(event.target.value));
+  }
+
+  function DEFSliderChange(event) {
+    setDEFSliderValue(parseInt(event.target.value));
+  }
+
+  function SPASliderChange(event) {
+    setSPASliderValue(parseInt(event.target.value));
+  }
+
+  function SPDSliderChange(event) {
+    setSPDSliderValue(parseInt(event.target.value));
+  }
+
+  function SPESliderChange(event) {
+    setSPESliderValue(parseInt(event.target.value));
+  }
+
+  //Send to Supabase
+
   //* Actual HTML
   return (
     <>
@@ -923,7 +960,486 @@ function Home() {
           the form should pop up, fill it out then BAM! Your idea will be added
           and in the pool for selection if people turn on custom ideas!
         </p>
-        <button className="btn btn-success mx-auto d-grid">
+        <form className="m-3">
+          <div className="form-formatting">
+            <label>
+              User Name
+              <br />
+              <input type="text" name="username" id="username" />
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Custom Type
+              <br />
+              <input type="text" name="customType" id="customType" />
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Good Against:
+              <br />
+              <label className="fake-button" style={typeStyleNormal}>
+                {" "}
+                Normal
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="normalGood"
+                  id="normalGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGrass}>
+                {" "}
+                Grass
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="grassGood"
+                  id="grassGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFire}>
+                {" "}
+                Fire
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fireGood"
+                  id="fireGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleWater}>
+                {" "}
+                Water
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="waterGood"
+                  id="waterGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleBug}>
+                {" "}
+                Bug
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="bugGood"
+                  id="bugGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFlying}>
+                {" "}
+                Flying
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="flyingGood"
+                  id="flyingGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFighting}>
+                {" "}
+                Fighting
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fightingGood"
+                  id="fightingGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStylePsychic}>
+                {" "}
+                Psychic
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="psychicGood"
+                  id="psychicGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleDark}>
+                {" "}
+                Dark
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="darkGood"
+                  id="darkGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleSteel}>
+                {" "}
+                Steel
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="steelGood"
+                  id="steelGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleRock}>
+                {" "}
+                Rock
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="rockGood"
+                  id="rockGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGround}>
+                {" "}
+                Ground
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="groundGood"
+                  id="groundGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleElectric}>
+                {" "}
+                Electric
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="electricGood"
+                  id="electricGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStylePoison}>
+                {" "}
+                Poison
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="poisonGood"
+                  id="poisonGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGhost}>
+                {" "}
+                Ghost
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="ghostGood"
+                  id="ghostGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleIce}>
+                {" "}
+                Ice
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="iceGood"
+                  id="iceGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleDragon}>
+                {" "}
+                Dragon
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="dragonGood"
+                  id="dragonGood"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFairy}>
+                {" "}
+                Fairy
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fairyGood"
+                  id="fairyGood"
+                />
+              </label>
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Bad Against:
+              <br />
+              <label className="fake-button" style={typeStyleNormal}>
+                {" "}
+                Normal
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="normalBad"
+                  id="normalBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGrass}>
+                {" "}
+                Grass
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="grassBad"
+                  id="grassBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFire}>
+                {" "}
+                Fire
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fireBad"
+                  id="fireBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleWater}>
+                {" "}
+                Water
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="waterBad"
+                  id="waterBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleBug}>
+                {" "}
+                Bug
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="bugBad"
+                  id="bugBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFlying}>
+                {" "}
+                Flying
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="flyingBad"
+                  id="flyingBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFighting}>
+                {" "}
+                Fighting
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fightingBad"
+                  id="fightingBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStylePsychic}>
+                {" "}
+                Psychic
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="psychicBad"
+                  id="psychicBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleDark}>
+                {" "}
+                Dark
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="darkBad"
+                  id="darkBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleSteel}>
+                {" "}
+                Steel
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="steelBad"
+                  id="steelBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleRock}>
+                {" "}
+                Rock
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="rockBad"
+                  id="rockBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGround}>
+                {" "}
+                Ground
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="groundBad"
+                  id="groundBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleElectric}>
+                {" "}
+                Electric
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="electricBad"
+                  id="electricBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStylePoison}>
+                {" "}
+                Poison
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="poisonBad"
+                  id="poisonBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleGhost}>
+                {" "}
+                Ghost
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="ghostBad"
+                  id="ghostBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleIce}>
+                {" "}
+                Ice
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="iceBad"
+                  id="iceBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleDragon}>
+                {" "}
+                Dragon
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="dragonBad"
+                  id="dragonBad"
+                />
+              </label>
+              <label className="fake-button" style={typeStyleFairy}>
+                {" "}
+                Fairy
+                <input
+                  className="check-to-button"
+                  type="checkbox"
+                  name="fairyBad"
+                  id="fairyBad"
+                />
+              </label>
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Custom Ability Name
+              <br />
+              <input type="text" id="customAbilityName" name="customAbilityName"/>
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Custom Ability Description
+              <br />
+              <textarea className="text-area-big" type="text" name="customAbilityDescription" id="customAbilityDescription"/>
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              <div className="row">
+                <h6 className="col-2 input-label">HP</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={HPSliderChange}
+                />
+                <p className="col-2">{HPSliderValue}/255</p>
+              </div>
+              <div className="row">
+                <h6 className="col-2">ATK</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={ATKSliderChange}
+                />
+                <p className="col-2">{ATKSliderValue}/255</p>
+              </div>
+              <div className="row">
+                <h6 className="col-2">DEF</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={DEFSliderChange}
+                />
+                <p className="col-2">{DEFSliderValue}/255</p>
+              </div>
+              <div className="row">
+                <h6 className="col-2">SPA</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={SPASliderChange}
+                />
+                <p className="col-2">{SPASliderValue}/255</p>
+              </div>
+              <div className="row">
+                <h6 className="col-2">SPD</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={SPDSliderChange}
+                />
+                <p className="col-2">{SPDSliderValue}/255</p>
+              </div>
+              <div className="row">
+                <h6 className="col-2">SPE</h6>
+                <input
+                  className="slider col-8"
+                  min="1"
+                  max="255"
+                  type="range"
+                  onChange={SPESliderChange}
+                />
+                <p className="col-2">{SPESliderValue}/255</p>
+              </div>
+            </label>
+          </div>
+          <div className="form-formatting">
+            <label>
+              Creation Name
+              <br />
+              <input type="text" id="creationName" name="creationName"/>
+            </label>
+          </div>
+        </form>
+        <button className="btn btn-success mx-auto d-grid" type="submit">
           Click Here To Add Custom Ideas!
         </button>
       </section>
