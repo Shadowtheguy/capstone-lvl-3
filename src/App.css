@@ -115,6 +115,7 @@
 }
 
 .stat-label {
+  font-size: 12px;
   margin-left: 5px;
   align-self: center;
   color: aliceblue;
@@ -130,7 +131,7 @@
   overflow: hidden;
 }
 
-.stat-filled{
+.stat-filled {
   border-radius: 10px;
   align-self: center;
   height: 10px;
@@ -197,7 +198,7 @@
 }
 
 .bottom-button {
-  position: absolute;
+  position: relative;
   bottom: 5px;
   align-self: center;
 }
