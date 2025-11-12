@@ -50,8 +50,8 @@ function Pokemix() {
     "Fire",
     "Water",
     "Bug",
-    "Flying",
     "Fighting",
+    "Flying",
     "Psychic",
     "Dark",
     "Dragon",
@@ -292,7 +292,6 @@ function Pokemix() {
   };
 
   // Setting the Colors for the stat bars
-  //! Bar colors only update after clicking the button again
   function statBarColoring() {
     if (userHP < 51) {
       userHPColor = "red";
