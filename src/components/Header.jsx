@@ -5,7 +5,7 @@ function Header() {
       <section className="container background-title">
         <h1 className="pokefont-title text-center">PokeMix!</h1>
       </section>
-      {/* Website Descritpion */}
+      {/* Website Descritption */}
       <section className="container background-description text-white">
         <h2 className="text-center">Welcome to the website</h2>
         <p className="text-center">
