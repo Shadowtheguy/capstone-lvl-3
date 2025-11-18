@@ -1,17 +1,11 @@
 import { useState, useRef } from "react";
 import { supabase } from "../utils/supabase";
+import {
+  randomNumber,
+  calculatePercentage,
+  getStatColor,
+} from "../utils/utils.js";
 
-//* Functions
-function randomNumber(a, b) {
-  return Math.floor(Math.random() * (b - a) + a);
-}
-
-function calculatePercentage(partialValue, totalValue) {
-  if (totalValue === 0) {
-    return 0;
-  }
-  return (partialValue / totalValue) * 100;
-}
 
 function Pokemix() {
   //* Setting Variables
@@ -227,7 +221,6 @@ function Pokemix() {
 
   // Styles for each stat
   statBarColoring();
-  opponentBarColoring();
 
   const statStyleHP = {
     backgroundColor: userHPColor,
@@ -291,165 +284,20 @@ function Pokemix() {
     width: calculatePercentage(opponentSPE, maxStatTotal) + "%",
   };
 
-  // Setting the Colors for the stat bars
   function statBarColoring() {
-    if (userHP < 51) {
-      userHPColor = "red";
-    } else if (userHP < 102) {
-      userHPColor = "orange";
-    } else if (userHP < 153) {
-      userHPColor = "yellow";
-    } else if (userHP < 204) {
-      userHPColor = "lime";
-    } else {
-      userHPColor = "cyan";
-    }
+    userHPColor = getStatColor(userHP);
+    userATKColor = getStatColor(userATK);
+    userDEFColor = getStatColor(userDEF);
+    userSPAColor = getStatColor(userSPA);
+    userSPDColor = getStatColor(userSPD);
+    userSPEColor = getStatColor(userSPE);
 
-    if (userHP < 51) {
-      userHPColor = "red";
-    } else if (userHP < 102) {
-      userHPColor = "orange";
-    } else if (userHP < 153) {
-      userHPColor = "yellow";
-    } else if (userHP < 204) {
-      userHPColor = "lime";
-    } else {
-      userHPColor = "cyan";
-    }
-
-    if (userATK < 51) {
-      userATKColor = "red";
-    } else if (userATK < 102) {
-      userATKColor = "orange";
-    } else if (userATK < 153) {
-      userATKColor = "yellow";
-    } else if (userATK < 204) {
-      userATKColor = "lime";
-    } else {
-      userATKColor = "cyan";
-    }
-
-    if (userDEF < 51) {
-      userDEFColor = "red";
-    } else if (userDEF < 102) {
-      userDEFColor = "orange";
-    } else if (userDEF < 153) {
-      userDEFColor = "yellow";
-    } else if (userDEF < 204) {
-      userDEFColor = "lime";
-    } else {
-      userDEFColor = "cyan";
-    }
-
-    if (userSPA < 51) {
-      userSPAColor = "red";
-    } else if (userSPA < 102) {
-      userSPAColor = "orange";
-    } else if (userSPA < 153) {
-      userSPAColor = "yellow";
-    } else if (userSPA < 204) {
-      userSPAColor = "lime";
-    } else {
-      userSPAColor = "cyan";
-    }
-
-    if (userSPD < 51) {
-      userSPDColor = "red";
-    } else if (userSPD < 102) {
-      userSPDColor = "orange";
-    } else if (userSPD < 153) {
-      userSPDColor = "yellow";
-    } else if (userSPD < 204) {
-      userSPDColor = "lime";
-    } else {
-      userSPDColor = "cyan";
-    }
-
-    if (userSPE < 51) {
-      userSPEColor = "red";
-    } else if (userSPE < 102) {
-      userSPEColor = "orange";
-    } else if (userSPE < 153) {
-      userSPEColor = "yellow";
-    } else if (userSPE < 204) {
-      userSPEColor = "lime";
-    } else {
-      userSPEColor = "cyan";
-    }
-  }
-
-  function opponentBarColoring() {
-    if (opponentHP < 51) {
-      opHPColor = "red";
-    } else if (opponentHP < 102) {
-      opHPColor = "orange";
-    } else if (opponentHP < 153) {
-      opHPColor = "yellow";
-    } else if (opponentHP < 204) {
-      opHPColor = "lime";
-    } else {
-      opHPColor = "cyan";
-    }
-
-    if (opponentATK < 51) {
-      opATKColor = "red";
-    } else if (opponentATK < 102) {
-      opATKColor = "orange";
-    } else if (opponentATK < 153) {
-      opATKColor = "yellow";
-    } else if (opponentATK < 204) {
-      opATKColor = "lime";
-    } else {
-      opATKColor = "cyan";
-    }
-
-    if (opponentDEF < 51) {
-      opDEFColor = "red";
-    } else if (opponentDEF < 102) {
-      opDEFColor = "orange";
-    } else if (opponentDEF < 153) {
-      opDEFColor = "yellow";
-    } else if (opponentDEF < 204) {
-      opDEFColor = "lime";
-    } else {
-      opDEFColor = "cyan";
-    }
-
-    if (opponentSPA < 51) {
-      opSPAColor = "red";
-    } else if (opponentSPA < 102) {
-      opSPAColor = "orange";
-    } else if (opponentSPA < 153) {
-      opSPAColor = "yellow";
-    } else if (opponentSPA < 204) {
-      opSPAColor = "lime";
-    } else {
-      opSPAColor = "cyan";
-    }
-
-    if (opponentSPD < 51) {
-      opSPDColor = "red";
-    } else if (opponentSPD < 102) {
-      opSPDColor = "orange";
-    } else if (opponentSPD < 153) {
-      opSPDColor = "yellow";
-    } else if (opponentSPD < 204) {
-      opSPDColor = "lime";
-    } else {
-      opSPDColor = "cyan";
-    }
-
-    if (opponentSPE < 51) {
-      opSPEColor = "red";
-    } else if (opponentSPE < 102) {
-      opSPEColor = "orange";
-    } else if (opponentSPE < 153) {
-      opSPEColor = "yellow";
-    } else if (opponentSPE < 204) {
-      opSPEColor = "lime";
-    } else {
-      opSPEColor = "cyan";
-    }
+    opHPColor = getStatColor(opponentHP);
+    opATKColor = getStatColor(opponentATK);
+    opDEFColor = getStatColor(opponentDEF);
+    opSPAColor = getStatColor(opponentSPA);
+    opSPDColor = getStatColor(opponentSPD);
+    opSPEColor = getStatColor(opponentSPE);
   }
 
   // List to cycle through
